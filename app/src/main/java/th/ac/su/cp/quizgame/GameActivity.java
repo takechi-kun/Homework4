@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -100,6 +101,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
             else{
                 AlertDialog.Builder dialog = new AlertDialog.Builder(GameActivity.this);
+                final Intent i = new Intent(GameActivity.this, MainActivity.class);
                     dialog.setTitle("สรุปผล");
                     dialog.setMessage("คุณได้ "+count_score+" คะแนน\n\nต้องดารเล่นเหมใหม่หรือไม่");
                     dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -107,10 +109,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         public void onClick(DialogInterface dialogInterface, int which) {
                             newQuiz();
                             scoreView.setText("");
+                            count_score=0;
+                            wrong=0;
                         }
                     }
                     );
-                    dialog.setNegativeButton("No", null);
+                    dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int which) {
+                                    startActivity(i);
+                                }
+                            }
+                    );
                     dialog.show();
 
             }
